@@ -2,22 +2,27 @@ package base;
 import java.util.Date;
 
 public class Accounting {
+	
+	//Default Variables
 	private int id = 0;
 	private double balance = 0;
 	private double annualInterestRate = 0;
 	private Date dateCreated;
 	
+	//Default Constructor
 	public Accounting() {
 	}
 
+	//Accounting Constructor
 	public Accounting(int id, double balance, double annualInterestRate) {
 		super();
 		this.id = id;
 		this.balance = balance;
 		this.annualInterestRate = annualInterestRate;
-		this.dateCreated = dateCreated;
+		this.dateCreated = new Date();
 	}
 
+	//Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -50,11 +55,19 @@ public class Accounting {
 		return annualInterestRate/12;
 	}
 	
-	public void withdraw(double ammount){
-		this.balance = balance - ammount;
+	//Withdraw method
+	public void withdraw(double amount) throws InsufficientFundsException{
+		if(amount <= balance){
+		balance = balance - amount;
+	}
+		else{
+			double needs = amount - balance;
+			throw new InsufficientFundsException(needs);
+		}
 	}
 	
-	public void deposit(double ammount){
-		this.balance = balance + ammount;
+	//Deposit method
+	public void deposit(double amount){
+		balance = balance + amount;
 	}
 }
